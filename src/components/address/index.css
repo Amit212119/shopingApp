@@ -1,0 +1,52 @@
+.addressFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+}
+
+.addressForm {
+    width: 50%;
+    background-color: gray;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 0px;
+    margin-top: 50px;
+    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.5);
+}
+
+.inputField {
+    height: 40px;
+    width: 70%;
+}
+
+.addressButton {
+    height: 35px;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.headingName {
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.errorMessage {
+    color: red;
+    display: flex;
+    justify-content: start;
+    padding-left: 100px;
+}
+
+.signupLink {
+    text-decoration: none;
+    color: black;
+}

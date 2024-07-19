@@ -1,0 +1,93 @@
+.buyProduct {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+background-color: lightgray;
+    
+}
+.buyProductContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+
+}
+.cartImage {
+    height: 200px;
+}
+.imageSide {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.infoSide {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0px;
+    width: 100%;
+}
+.quantityButton {
+    font-size: 30px;
+    font-weight: 600;
+    border: 1px solid black;
+    border-radius: 10%;
+    width: 50px;
+        height: 35px;
+}
+.quantityButtonContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.cartTitle{
+    font-size: 20px;
+        font-weight: 900;
+}
+.cartPrice{
+    font-size: 30px;
+        font-weight: bolder;
+}
+.removeCart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.removeCartButton{
+   height: 25px;
+   width: 85px;
+   font-size: 20px;
+   font-weight: 500;
+   background-color: gray;
+   margin-right: 20px;
+   border: none;
+}
+.buyProcessButton {
+    background-color: yellowgreen;
+    height: 35px;
+    width: 250px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+
+}
+.emptyCart {
+    font-size: 40px;
+    font-weight: bolder;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.totalAmount {
+    font-size: 22px;
+    font-weight: 700;
+    
+}

@@ -1,0 +1,83 @@
+.paymentContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.addressAndItem {
+    display: flex;
+    flex-direction: row;
+    height: 60vh;
+    width: 100%;
+}
+.addressLable {
+        font-weight: 500;
+        padding-right: 55px;
+        width: 30%;
+}
+.addressField {
+    border: 1px solid gray;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 30px;
+    justify-content: space-around;
+    align-items: start;
+    text-align: left;
+}
+.itemField{
+    border: 1px solid gray;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    overflow-y:scroll;
+    
+}
+.selectedPaymentItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: lightgray;
+    padding: 0px 10px;
+}
+.paymentProductImage {
+    height: 72px;
+    width: 80px;
+}
+.youPay {
+    font-size: 20px;
+    font-weight: 600;
+}
+.buyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+.paymentField {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+        align-items: center;
+}
+.paymentButton{
+    height: 25px;
+    width: 75px;
+    background-color: green;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+}
+.addressLabelValue {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+}
