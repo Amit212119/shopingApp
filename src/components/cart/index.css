@@ -1,93 +1,163 @@
-.buyProduct {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-background-color: lightgray;
-    
+/* Reset base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.buyProductContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin-top: 30px;
 
+.buyProductContainer {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
-.cartImage {
-    height: 200px;
+
+.buyProduct {
+    display: flex;
+    gap: 20px;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
 }
+
 .imageSide {
-    width: 40%;
+    flex: 1 1 120px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.cartImage {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 .infoSide {
+    flex: 3 1 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px 0px;
-    width: 100%;
+    gap: 8px;
 }
-.quantityButton {
-    font-size: 30px;
-    font-weight: 600;
-    border: 1px solid black;
-    border-radius: 10%;
-    width: 50px;
-        height: 35px;
-}
-.quantityButtonContainer{
+
+.removeCart {
     display: flex;
-    flex-direction: row;
-    gap: 30px;
-}
-.cartTitle{
-    font-size: 20px;
-        font-weight: 900;
-}
-.cartPrice{
-    font-size: 30px;
-        font-weight: bolder;
-}
-.removeCart{
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-.removeCartButton{
-   height: 25px;
-   width: 85px;
-   font-size: 20px;
-   font-weight: 500;
-   background-color: gray;
-   margin-right: 20px;
-   border: none;
-}
-.buyProcessButton {
-    background-color: yellowgreen;
-    height: 35px;
-    width: 250px;
-    border-radius: 50px;
-    margin-bottom: 30px;
-    border: none;
-    font-size: 20px;
-    font-weight: 500;
 
+.cartTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #222;
 }
-.emptyCart {
-    font-size: 40px;
-    font-weight: bolder;
-    width: 100%;
+
+.removeCartButton {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.removeCartButton:hover {
+    background-color: #b71c1c;
+}
+
+.cartPrice {
+    font-size: 1rem;
+    color: #555;
+}
+
+.quantityButtonContainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    gap: 10px;
+    margin-top: 6px;
 }
-.totalAmount {
-    font-size: 22px;
+
+.quantityButton {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     font-weight: 700;
-    
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.quantityButton:hover {
+    background-color: #388e3c;
+}
+
+.totalAmount {
+    text-align: right;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 20px 0 10px 0;
+    color: #333;
+}
+
+.buyProcessButton {
+    width: 100%;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 14px 0;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.buyProcessButton:hover {
+    background-color: #115293;
+}
+
+.emptyCart {
+    font-size: 1.4rem;
+    color: #777;
+    text-align: center;
+    margin: 60px 0;
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+    .buyProduct {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .imageSide {
+        margin-bottom: 12px;
+    }
+
+    .cartImage {
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+    }
+
+    .infoSide {
+        width: 100%;
+    }
+
+    .totalAmount {
+        text-align: left;
+    }
 }

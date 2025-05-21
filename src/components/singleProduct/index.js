@@ -9,14 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SingleProduct = () => {
-  const showWarning = () => {
-    toast.warning('This Product already Added.', {
-      autoClose: 5000,
-      position: 'top-center',
-    });
-  };
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [singleProduct, setSingleProduct] = useState({});
 
@@ -24,26 +18,18 @@ const SingleProduct = () => {
   const inCartProduct = useSelector((state) => state.cartProduct.cartData);
 
   useEffect(() => {
-    const productApi = async () => {
+    const fetchProduct = async () => {
       try {
-        const data = await axios.get(`https://fakestoreapi.com/products/${productDetails.id}`);
-        setSingleProduct(data.data);
-        console.log(data.data, 'useEffect');
+        const res = await axios.get(`https://fakestoreapi.com/products/${productDetails.id}`);
+        setSingleProduct(res.data);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching product:', error);
       }
     };
-    productApi();
-  }, []);
+    fetchProduct();
+  }, [productDetails]);
 
-  const navigate = useNavigate();
-
-  const addToCard = () => {
-    // try {
-    //   const response = await axios.post('http://localhost:5000/cart',productDetails);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const addToCart = () => {
     const cartPayload = {
       id: productDetails.id,
       name: productDetails.name,
@@ -52,55 +38,59 @@ const SingleProduct = () => {
       qty: 1,
       total: 0,
     };
-    if ((inCartProduct || []).length  === 0) {
+
+    const alreadyInCart = inCartProduct.find((item) => item.id === productDetails.id);
+    if (!alreadyInCart) {
       dispatch(addCardProduct(cartPayload));
     } else {
-      const data = inCartProduct.find((item) => item.id === productDetails.id);
-      if (!data) {
-        dispatch(addCardProduct(cartPayload));
-      } else {
-        showWarning();
-      }
+      toast.warning('This product is already in your cart.', {
+        autoClose: 3000,
+        position: 'top-center',
+      });
     }
   };
 
-  const goToCard = () => {
-    navigate('/cart');
-  };
+  const goToCart = () => navigate('/cart');
 
   return (
-    <div className='oneProductContainer'>
-      <div className='productDetails'>
-        <div className='imageBox'>
+    <div className='single-product-wrapper'>
+      <div className='single-product-container'>
+        <div className='product-image-box'>
           <img
-            src={singleProduct?.image}
-            alt={singleProduct}
-            className='productImage'
+            className='product-image'
+            src={singleProduct.image}
+            alt={singleProduct.title}
           />
         </div>
-        <div className='infoBox'>
-          <p className='pCategory'>{singleProduct?.category}</p>
-          <p className='pTitle'>{singleProduct?.title}</p>
-          <p className='pRate'>
-            Rating {singleProduct?.rating?.rate}
-            <FaStar />
-          </p>
-          <p className='pPrice'>${singleProduct?.price}</p>
-          <p>{singleProduct?.description}</p>
-          <div className='cartButtonContainer'>
+
+        <div className='product-info-box'>
+          <p className='product-category'>{singleProduct.category}</p>
+          <h2 className='product-title'>{singleProduct.title}</h2>
+
+          <div className='product-rating'>
+            <span>{singleProduct?.rating?.rate}</span>
+            <FaStar className='star-icon' />
+          </div>
+
+          <p className='product-price'>${singleProduct.price}</p>
+
+          <p className='product-description'>{singleProduct.description}</p>
+
+          <div className='product-buttons'>
             <button
-              className='addCart'
-              onClick={addToCard}>
+              className='btn btn-add'
+              onClick={addToCart}>
               Add to Cart
             </button>
             <button
-              className='goCart'
-              onClick={goToCard}>
+              className='btn btn-go'
+              onClick={goToCart}>
               Go to Cart
             </button>
           </div>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );

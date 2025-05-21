@@ -6,117 +6,106 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const Payment = (props) => {
-
-    const navigate = useNavigate();
-
-   
-
-    const showSuccessMessage = () => {
-        toast.success('Your Order on Way!', {
-            autoClose: 5000,
-            position: 'top-center'
-        })
-    }
-     const buyProduct = () => {
-        showSuccessMessage();
-       navigate('/');
-     };
+  const navigate = useNavigate();
+  const [paymentType, setPaymentType] = useState('');
   const paymentProduct = useSelector((state) => state.cartProduct.cartData);
 
-    const [selectedOption, setSelectedOption] = useState('');
+  const showSuccessMessage = () => {
+    toast.success('Your Order is on the way!', {
+      autoClose: 3000,
+      position: 'top-center',
+    });
+  };
 
-    const handleOptionChange = (event) => {
-      setSelectedOption(event.target.value);
-    };
+  const showErrorMessage = () => {
+    toast.warning('Please select a payment method', {
+      autoClose: 3000,
+      position: 'top-center',
+    });
+  };
+
+  const handleChange = (event) => {
+    setPaymentType(event.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!paymentType) {
+      showErrorMessage();
+    } else {
+      showSuccessMessage();
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  };
 
   return (
-    <div className='paymentContainer'>
-      <div className='addressAndItem'>
-        <div className='itemField'>
-          {paymentProduct?.map((item) => (
-            <div className='selectedPaymentItem'>
-              <div>
-                <img
-                  className='paymentProductImage'
-                  src={item.image}
-                  alt='quantity'
-                />
-              </div>
-              <div>
-                <p>{item.price}</p>
-              </div>
-              <div>
-                <p>{item?.qty}</p>
+    <div className='payment-wrapper'>
+      <div className='payment-grid'>
+        <div className='payment-items'>
+          <h3>Items</h3>
+          {paymentProduct?.map((item, index) => (
+            <div
+              className='payment-item'
+              key={index}>
+              <img
+                src={item.image}
+                alt='Product'
+                className='payment-item-img'
+              />
+              <div className='payment-item-details'>
+                <p className='payment-item-price'>${item.price}</p>
+                <p className='payment-item-qty'>Qty: {item.qty}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className='addressField'>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Name: </span>
-            <span className='addressValue'>{props.address.name}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Phone: </span>
-            <span className='addressValue'>{props.address.phone}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Country: </span>
-            <span className='addressValue'>{props.address.country}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>State: </span>
-            <span className='addressValue'>{props.address.state}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Pin Code: </span>
-            <span className='addressValue'>{props.address.pinCode}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Area: </span>
-            <span className='addressValue'>{props.address.area}</span>
-          </p>
-          <p className='addressLabelValue'>
-            <span className='addressLable'>Land Mark:</span>
-            <span className='addressValue'>{props.address.landMark}</span> </p> <p>
-          </p>
+
+        <div className='payment-address'>
+          <h3>Shipping Address</h3>
+          {Object.entries(props.address).map(([key, value]) => (
+            <p key={key}>
+              <span className='address-label'>{key.replace(/([A-Z])/g, ' $1')}: </span>
+              <span className='address-value'>{value}</span>
+            </p>
+          ))}
         </div>
       </div>
-      <div className='paymentField'>
-        <div className='youPay'>You will Pay :{props.total}</div>
-        <div>
-          <form className='buyForm'>
-            <div>
-              <input
-                type='radio'
-                id='option1'
-                name='options'
-                value='Option 1'
-                checked={selectedOption === 'Option 1'}
-                onChange={handleOptionChange}
-              />
-              <label htmlFor='option1'>Online Pay</label>
-            </div>
-            <div>
-              <input
-                type='radio'
-                id='option2'
-                name='options'
-                value='Option 2'
-                checked={selectedOption === 'Option 2'}
-                onChange={handleOptionChange}
-              />
-              <label htmlFor='option2'>Cash on Delivery</label>
-            </div>
-            <button
-              className='paymentButton'
-              onClick={buyProduct}>
-              {' '}
-              Buy
-            </button>
-          </form>
-        </div>
+
+      <div className='payment-summary'>
+        <h3>Total: ${props.total}</h3>
+        <form
+          onSubmit={handleSubmit}
+          className='payment-form'>
+          <label className='radio-option'>
+            <input
+              type='radio'
+              name='paymentMethod'
+              value='online pay'
+              checked={paymentType === 'online pay'}
+              onChange={handleChange}
+            />
+            Online Pay
+          </label>
+          <label className='radio-option'>
+            <input
+              type='radio'
+              name='paymentMethod'
+              value='cash on delivery'
+              checked={paymentType === 'cash on delivery'}
+              onChange={handleChange}
+            />
+            Cash on Delivery
+          </label>
+          <button
+            type='submit'
+            className='payment-button'>
+            Place Order
+          </button>
+        </form>
       </div>
+
       <ToastContainer />
     </div>
   );

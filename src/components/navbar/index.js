@@ -1,32 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
-import { FaUser, FaShoppingCart } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
+import { CiLogin } from 'react-icons/ci';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CiLogin, CiLogout } from 'react-icons/ci';
 import { logout } from '../store/authSlice';
-import { useNavigate } from 'react-router-dom';
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const cartCount = useSelector((state) => state.cartProduct.cartData);
-
-  const navigate = useNavigate();
-
-  const goToCard = () => {
-    navigate('/cart');
-  };
+  const { name, isAuthenticated } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const Authenticated = useSelector((state) => state.auth);
-  const { name, isAuthenticated } = Authenticated;
-  console.log(isAuthenticated, 'nav');
-
-  const popUpClose = () => {
-    setShowProfile(!showProfile);
-  };
+  const toggleProfile = () => setShowProfile(!showProfile);
+  const toggleMobileMenu = () => setIsMobile(!isMobile);
 
   const doLogout = () => {
     dispatch(logout());
@@ -34,69 +25,98 @@ const Navbar = (props) => {
     navigate('/');
   };
 
+  const goToCart = () => navigate('/cart');
+
+  // Hide dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = () => setShowProfile(false);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
-    <div className='navContainer'>
-      <div className='logoHeading'>
-        <span className='logo'>UNIQUE</span>
-        <span className='logoSec'>COLLECTION</span>
+    <nav className='navbar'>
+      <div className='navbar-left'>
+        <Link
+          to='/'
+          className='brand'>
+          <span className='brand-primary'>UNIQUE</span>
+          <span className='brand-secondary'>COLLECTION</span>
+        </Link>
       </div>
-      <ul className='listItem'>
-        <li>
-          <Link className='linkButton'>Home</Link>
-        </li>
-        <li>
-          <Link className='linkButton'>Product</Link>
-        </li>
-        <li>
-          <Link
-            to={isAuthenticated ? '/contact' : '/login'}
-            className='linkButton'>
-            Contact
-          </Link>
-        </li>
-      </ul>
-      <div className='buttonContainer'>
+
+      <div className={`nav-center ${isMobile ? 'mobile-active' : ''}`}>
+        <ul className='nav-links'>
+          <li>
+            <Link
+              to='/'
+              className='nav-link'>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              to='/product'
+              className='nav-link'>
+              Products
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={isAuthenticated ? '/contact' : '/login'}
+              className='nav-link'>
+              Contact
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      <div className='navbar-right'>
         {isAuthenticated ? (
           <>
-            <p
-              className='userName'
-              onClick={popUpClose}>
-              Hi, {name}
-            </p>
-            {showProfile && (
-              <div className='profle-details'>
-                <div className='profile-info'>
-                  <span className='profileLink'>Profile</span>
+            <div
+              className='profile-container'
+              onClick={(e) => e.stopPropagation()}>
+              <p
+                className='user-greeting'
+                onClick={toggleProfile}>
+                Hi, {name}
+              </p>
+              {showProfile && (
+                <div className='profile-dropdown'>
+                  <span className='dropdown-item'>Profile</span>
+                  <hr />
+                  <span
+                    className='dropdown-item logout'
+                    onClick={doLogout}>
+                    Logout
+                  </span>
                 </div>
-                <hr></hr>
-                <div
-                  className='logout'
-                  onClick={doLogout}>
-                  LogOut
-                </div>
-              </div>
-            )}
+              )}
+            </div>
+            <button
+              className='cart-button'
+              onClick={goToCart}>
+              <FaShoppingCart />
+              <span className='cart-count'>({cartCount?.length || 0})</span>
+            </button>
           </>
         ) : (
           <Link
             to='/login'
-            className='buttonLink'>
-            <button className='buttonStyle'>
-              <CiLogin />
-              <span>Login</span>
-            </button>
+            className='login-button'>
+            <CiLogin />
+            <span>Login</span>
           </Link>
         )}
-        {isAuthenticated && (
-          <button
-            className='buttonStyle'
-            onClick={goToCard}>
-            <FaShoppingCart />
-            <span>Cart ({(cartCount || []).length})</span>
-          </button>
-        )}
       </div>
-    </div>
+
+      <div
+        className='mobile-toggle'
+        onClick={toggleMobileMenu}>
+        ☰
+      </div>
+    </nav>
   );
 };
 

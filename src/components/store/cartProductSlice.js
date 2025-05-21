@@ -7,7 +7,6 @@ const cardProductSlice = createSlice({
   },
   reducers: {
     addCardProduct(state, action) {
-      console.log('addCardProduct', action.payload);
       state.cartData.push(action.payload);
     },
     deleteCardProduct(state, action) {

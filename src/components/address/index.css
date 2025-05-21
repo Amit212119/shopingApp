@@ -1,52 +1,78 @@
-.addressFormContainer {
+/* Address.css */
+
+.address-wrapper {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding: 60px 20px;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.address-form {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+    font-size: 1.8rem;
+    font-weight: 600;
     text-align: center;
-
-
+    color: #2c3e50;
+    margin-bottom: 30px;
 }
 
-.addressForm {
-    width: 50%;
-    background-color: gray;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    justify-content: center;
-    text-align: center;
-    padding: 20px 0px;
-    margin-top: 50px;
-    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.5);
+.form-group {
+    margin-bottom: 20px;
 }
 
-.inputField {
-    height: 40px;
-    width: 70%;
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-.addressButton {
-    height: 35px;
-    width: 200px;
-    font-size: 16px;
-    font-weight: 500;
+.form-input:focus {
+    border-color: #3498db;
 }
 
-.headingName {
-    font-size: 28px;
-    font-weight: 900;
+.error-text {
+    margin-top: 6px;
+    font-size: 0.875rem;
+    color: #e74c3c;
 }
 
-.errorMessage {
-    color: red;
-    display: flex;
-    justify-content: start;
-    padding-left: 100px;
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #2ecc71;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.signupLink {
-    text-decoration: none;
-    color: black;
+.submit-button:hover {
+    background-color: #27ae60;
+}
+
+@media (max-width: 480px) {
+    .address-form {
+        padding: 30px 20px;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
 }

@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
-  const showTostMessage = () => {
+  const showToastMessage = () => {
     toast.error('Email already Registered', {
       autoClose: 5000,
       position: 'top-right',
@@ -23,101 +23,100 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const signUpSchema = Yup.object({
-    name: Yup.string().min(2).max(15).required('Name is Required.'),
-    email: Yup.string().email().required('Email is required'),
-    password: Yup.string().min(6).max(15).required('Password is Required.'),
+    name: Yup.string().min(2).max(15).required('Name is required.'),
+    email: Yup.string().email().required('Email is required.'),
+    password: Yup.string().min(6).max(15).required('Password is required.'),
     confirmPassword: Yup.string()
-      .required('Confirm Paswword is Required.')
-      .oneOf([Yup.ref('password'), null], 'Confirm Password must match with Password'),
+      .required('Confirm Password is required.')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
   });
-  const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
+
+  const formik = useFormik({
     initialValues: initialValue,
     validationSchema: signUpSchema,
-    onSubmit: async (values, action) => {
+    onSubmit: async (values, actions) => {
       try {
         const response = await axios.get('http://localhost:5000/register');
-        const data = response.data.find((state) => state.email === values.email);
-        if (data ) {
-          showTostMessage();
+        const userExists = response.data.find((user) => user.email === values.email);
+        if (userExists) {
+          showToastMessage();
         } else {
-         
-           dispatch(registerUser(values));
-           action.resetForm();
-           navigate('/login');
+          dispatch(registerUser(values));
+          actions.resetForm();
+          navigate('/login');
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error('Signup Error:', error);
+      }
     },
   });
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } = formik;
+
   return (
-    <div className='signFormContainer'>
+    <div className='signup-container'>
       <form
         onSubmit={handleSubmit}
-        className='signupForm'>
-        <div className='signupHeading'>
-          <span className='headingName'>Looks like you're new here!</span>
-          <p>Sign up with your email to get started</p>
-        </div>
-        <div>
-          <input
-            className='inputField'
-            type='text'
-            placeholder='Full Name'
-            name='name'
-            onChange={handleChange}
-            value={values.name}
-            onBlur={handleBlur}
-          />
-          {errors.name && touched.name && <p className='errorMessage'>{errors.name}</p>}
-        </div>
-        <div>
-          <input
-            className='inputField'
-            type='email'
-            placeholder='Email'
-            name='email'
-            onChange={handleChange}
-            value={values.email}
-            onBlur={handleBlur}
-          />
-          {errors.email && touched.email && <p className='errorMessage'>{errors.email}</p>}
-        </div>
-        <div>
-          <input
-            className='inputField'
-            type='Password'
-            placeholder='Password'
-            name='password'
-            onChange={handleChange}
-            value={values.password}
-            onBlur={handleBlur}
-          />
-          {errors.password && touched.password && <p className='errorMessage'>{errors.password}</p>}
-        </div>
-        <div>
-          <input
-            className='inputField'
-            type='password'
-            placeholder='Confirm Password'
-            name='confirmPassword'
-            onChange={handleChange}
-            value={values.confirmPassword}
-            onBlur={handleBlur}
-          />
-          {errors.confirmPassword && touched.confirmPassword && (
-            <p className='errorMessage'>{errors.confirmPassword}</p>
-          )}
-        </div>
-        <div>
-          <button
-            type='submit'
-            className='signupButton'>
-            Register
-          </button>
-        </div>
+        className='signup-form'>
+        <h2 className='form-title'>Create Your Account</h2>
+        <p className='form-subtitle'>Join us to explore the best products</p>
+
+        <input
+          type='text'
+          name='name'
+          placeholder='Full Name'
+          value={values.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className='input-field'
+        />
+        {errors.name && touched.name && <p className='error'>{errors.name}</p>}
+
+        <input
+          type='email'
+          name='email'
+          placeholder='Email'
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className='input-field'
+        />
+        {errors.email && touched.email && <p className='error'>{errors.email}</p>}
+
+        <input
+          type='password'
+          name='password'
+          placeholder='Password'
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className='input-field'
+        />
+        {errors.password && touched.password && <p className='error'>{errors.password}</p>}
+
+        <input
+          type='password'
+          name='confirmPassword'
+          placeholder='Confirm Password'
+          value={values.confirmPassword}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className='input-field'
+        />
+        {errors.confirmPassword && touched.confirmPassword && (
+          <p className='error'>{errors.confirmPassword}</p>
+        )}
+
+        <button
+          type='submit'
+          className='submit-button'>
+          Sign Up
+        </button>
       </form>
       <ToastContainer />
     </div>

@@ -27,6 +27,10 @@ function App() {
           element={<Product />}
         />
         <Route
+          path='/product'
+          element={<Product />}
+        />
+        <Route
           path='/login'
           element={<Login />}
         />

@@ -1,67 +1,188 @@
-.navContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background-color: gray;
+/* Navbar.css */
 
-}
-.listItem {
-    list-style: none;
+.navbar {
     display: flex;
-    flex-direction: row;
-    gap: 30px;
-    font-size: 20px;
-    font-weight: 500;
-}
-.buttonContainer{
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
+    padding: 18px 24px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
-.buttonStyle{
-    height: 30px;
-    width: 100px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
+
+.brand {
+    text-decoration: none;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-.logo {
-    font-size: 35px;
+    gap: 6px;
+    font-size: 24px;
     font-weight: 700;
 }
-.buttonLink {
-    text-decoration: none;
-    
+
+.brand-primary {
+    color: #27ae60;
 }
-.userName {
-    font-size: 22px;
-    font-weight: 600;
+
+.brand-secondary {
+    color: #2c3e50;
 }
-.profle-details {
-    border: 1px solid black;
-    padding: 5px 8px;
-    border-radius: 10px;
-    position: absolute;
-    right: 230px;
-    top: 57px;
-    background-color: white;
-}
-.linkButton{
-    color: black;
-    text-decoration: none;
-}
-.logoHeading {
+
+.nav-links {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 28px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #27ae60;
+}
+
+.navbar-right {
+    display: flex;
     align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.login-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #27ae60;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #1e8449;
+}
+
+.cart-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+    color: #2c3e50;
+}
+
+.cart-count {
+    font-size: 14px;
+    margin-left: 6px;
+    font-weight: 500;
+}
+
+.user-greeting {
+    cursor: pointer;
+    font-weight: 500;
+    color:#1e8449;
+    position: relative;
+}
+
+.profile-container {
+    position: relative;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px 0;
+    width: 150px;
+    animation: fadeIn 0.2s ease-in-out;
+    z-index: 10;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 6px;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    color: #27ae60;
+}
+
+.logout {
+    color: #e74c3c;
+}
+
+.logout:hover {
+    background-color: #fdecea;
+    color: #c0392b;
+}
+
+.mobile-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #2c3e50;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-center {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-center.mobile-active {
+        display: flex;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    .navbar-right {
+        gap: 12px;
+    }
 }
